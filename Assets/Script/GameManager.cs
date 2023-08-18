@@ -1,5 +1,6 @@
 
 using Script.Extension;
+using TMPro;
 using UnityEngine;
 
 namespace Script
@@ -8,18 +9,23 @@ namespace Script
     {
         [Min(0)]
         public int streak;
-        public string playerTitle;
 
+        private string playerTitle;
         public int pourAttempts;
         public Color colorToGo;
         public string potionName;
+        public int deadAmount;
         public bool isDead;
 
         private DrinkStorage _storage;
 
         private DrinkScript mainDrink;
 
+        
         public GameObject bottle;
+
+        public TextMeshProUGUI score;
+        public TextMeshProUGUI title;
         
         // Start is called before the first frame update
         void Start()
@@ -31,7 +37,8 @@ namespace Script
         // Update is called once per frame
         void Update()
         {
-        
+            score.SetText(streak.ToString());
+            title.SetText(playerTitle);
         }
 
         public DrinkStorage GetDrinkStorage()
@@ -66,7 +73,7 @@ namespace Script
             colorToGo = starter;
             
             // TODO: potion name select
-            
+            // TODO: Title giving
             
         }
 
