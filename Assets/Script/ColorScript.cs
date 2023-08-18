@@ -6,33 +6,28 @@ using UnityEngine;
 public class ColorScript : MonoBehaviour
 {
     public Color colorOfTheSprite;
+    private GameObject FinalDrink;
     private DrinkScript finalDrink;
     private DrinkStorage Storage;
-    int colorIndex = -1;
+    Renderer FinalDrinkRenderer;
+    Renderer MixDrinkRenderer;
     // Start is called before the first frame update
     void Start()
     {
-        colorOfTheSprite = GetComponent<SpriteRenderer>().color;
+        MixDrinkRenderer = gameObject.GetComponent<Renderer>();
+        MixDrinkRenderer.material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        FinalDrinkRenderer = GameObject.FindWithTag("Drink").GetComponent<Renderer>();
+        FinalDrinkRenderer.material.color = Color.white;
 
+        Vector4 colorOfTheFinalDrink = FinalDrinkRenderer.material.color;
+        Vector4 colorOfTheMixDrink = MixDrinkRenderer.material.color;
         
-        if(colorOfTheSprite == Color.red)
-        {
-            colorIndex = 0;
-        }else if(colorOfTheSprite == Color.green)
-        {
-            colorIndex = 1;
-        }else if(colorOfTheSprite == Color.blue)
-        {
-            colorIndex = 2;
-        }
-        finalDrink = GameObject.FindWithTag("Drink").GetComponent<DrinkScript>();
-        //Storage = GameObject.FindWithTag("storage").GetComponent<DrinkStorage>();
     }
 
     void OnMouseDown()
     {
         Debug.Log("Sikeres");
-        finalDrink.AddColor(colorIndex);
+
     }
 
 }
