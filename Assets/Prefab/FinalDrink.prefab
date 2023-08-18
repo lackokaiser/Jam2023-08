@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1433927997060461503}
   - component: {fileID: 6523633356570679499}
+  - component: {fileID: 5907945349315551868}
   m_Layer: 0
   m_Name: FinalDrink
   m_TagString: Drink
@@ -85,6 +86,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5907945349315551868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7059177061188562924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89754c2aed9640e489dbf6aff0ede866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colorScript: {fileID: 5805147215546127795}
 --- !u!1 &9007205202010949489
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 414047436135120470}
   - component: {fileID: 8298112815885996799}
+  - component: {fileID: 5805147215546127795}
   m_Layer: 0
   m_Name: drinkColor
   m_TagString: Untagged
@@ -169,3 +184,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5805147215546127795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007205202010949489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8784568b01c34378b60463b4102d7455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
