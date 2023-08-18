@@ -26,7 +26,6 @@ namespace Script
         public bool isDead;
 
         private DrinkStorage _storage;
-
         private DrinkScript mainDrink;
 
         
@@ -34,17 +33,27 @@ namespace Script
 
         public TextMeshProUGUI score;
         public TextMeshProUGUI title;
-        
+
+        public Renderer ColorRenderer;
+        public GameObject Potion;
+
         // Start is called before the first frame update
         void Start()
         {
             _storage = new DrinkStorage();
             mainDrink = GameObject.FindWithTag("Drink").GetComponent<DrinkScript>();
-
+            Potion = GameObject.FindWithTag("Drink");
             ReadPotionsAndNames(EnglishPotions, @"Assets\Script\textfiles\potion_names.txt");
             ReadPotionsAndNames(GermanPotions, @"Assets\Script\textfiles\potion_names_german.txt");
             ReadPotionsAndNames(EnglishTitles, @"Assets\Script\textfiles\player_levels.txt");
             ReadPotionsAndNames(GermanTitles, @"Assets\Script\textfiles\player_levels_german.txt");
+
+            for(int i = 0; i < _storage.GetDrinkAmount(); i++)
+            {
+                GameObject tmp = Instantiate(Potion, new Vector3(i * 2.0f, 1.0f), Quaternion.identity);
+                tmp.GetComponent<SpriteRenderer>().color = _storage.GetDrinkColor(i);
+            }
+
         }
 
         // Update is called once per frame
@@ -110,6 +119,7 @@ namespace Script
                 string line = sr.ReadLine();
                 list.Add(line);
             }
+            Debug.Log("Fasz");
         }
     }
 }
