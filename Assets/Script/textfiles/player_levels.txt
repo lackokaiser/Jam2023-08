@@ -1,7 +1,6 @@
 Rookie
 Seer
 Evoker
-Seer
 Conjurer
 Theurgist
 Magician
