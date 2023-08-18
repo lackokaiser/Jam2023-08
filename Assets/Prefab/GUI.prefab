@@ -948,7 +948,7 @@ MonoBehaviour:
   score: {fileID: 187249808518136665}
   title: {fileID: 1230523565694650742}
   ColorRenderer: {fileID: 0}
-  Potion: {fileID: 0}
+  Potion: {fileID: 6479652902843651506, guid: 1c1c3c6d0dee4744f9fc5d6fa427f49f, type: 3}
 --- !u!1 &8468426052500940800
 GameObject:
   m_ObjectHideFlags: 0
