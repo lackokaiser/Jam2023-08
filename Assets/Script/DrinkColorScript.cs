@@ -26,6 +26,11 @@ namespace Script
             }
         }
 
+        public Color getCurrentColor()
+        {
+            return _spriteRenderer.color;
+        }
+
         public void AddColor(Color c)
         {
             SetColor(_spriteRenderer.color + c);

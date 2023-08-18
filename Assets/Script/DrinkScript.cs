@@ -6,17 +6,14 @@ namespace Script
 {
     public class DrinkScript : MonoBehaviour
     {
-        private DrinkStorage Storage;
         [SerializeField]
         private DrinkColorScript _colorScript;
 
-        
-        private void Start()
+        public Color getCurrentColor()
         {
-            Storage = GameObject.FindWithTag("storage").GetComponent<DrinkStorage>();
-
+            return _colorScript.getCurrentColor();
         }
-
+        
         public void AddColor(Color c)
         {
             _colorScript.AddColorFade(c);
