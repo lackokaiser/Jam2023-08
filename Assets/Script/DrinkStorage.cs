@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using Script.Extension;
 using UnityEngine;
 
 namespace Script
 {
-    public class DrinkStorage : MonoBehaviour
+    public class DrinkStorage
     {
         private List<Color> drinks = new();
 
-        private void Start()
+        public DrinkStorage()
         {
             InitDrinks();
             
@@ -20,8 +21,10 @@ namespace Script
             drinks.Add(Color.blue);
         }
 
-        public Color GetDrinkColor(int index)
+        public Color GetDrinkColor(int index, bool inverted = false)
         {
+            if (inverted)
+                return drinks[index].InvertColor();
             return drinks[index];
         }
 

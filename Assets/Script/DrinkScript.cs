@@ -6,8 +6,6 @@ namespace Script
 {
     public class DrinkScript : MonoBehaviour
     {
-        private List<(int, int)> listOfColors = new();
-
         private DrinkStorage Storage;
         [SerializeField]
         private DrinkColorScript _colorScript;
@@ -19,9 +17,19 @@ namespace Script
 
         }
 
-        public void AddColor(int addedIndex)
+        public void AddColor(Color c)
         {
-            
+            _colorScript.AddColorFade(c);
+        }
+
+        public void SetColorFade(Color c)
+        {
+            _colorScript.InitFade(c);
+        }
+
+        public void SetColor(Color c)
+        {
+            _colorScript.SetColor(c);
         }
     }
 }

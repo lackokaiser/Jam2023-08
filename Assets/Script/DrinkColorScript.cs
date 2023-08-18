@@ -6,7 +6,7 @@ namespace Script
     public class DrinkColorScript : MonoBehaviour
     {
         private SpriteRenderer _spriteRenderer;
-        private float fadeTime;
+        public float fadeTime = 10;
         private bool isChanging;
         private float fadeStart;
         private Color changeTo;
@@ -26,10 +26,25 @@ namespace Script
             }
         }
 
+        public void AddColor(Color c)
+        {
+            SetColor(_spriteRenderer.color + c);
+        }
+
+        public void AddColorFade(Color c)
+        {
+            InitFade(_spriteRenderer.color + c);
+        }
+
+        public void SetColor(Color c)
+        {
+            _spriteRenderer.color = c;
+        }
+
         public void InitFade(Color into)
         {
             changeTo = into;
-            fadeTime += 10;
+            fadeStart = 0;
         }
     }
 }
