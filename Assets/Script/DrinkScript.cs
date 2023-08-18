@@ -6,16 +6,20 @@ namespace Script
 {
     public class DrinkScript : MonoBehaviour
     {
-        List<Tuple<int, int>> listOfColors = new List<Tuple<int, int>>
-        {
-            Tuple.Create(1,0),
-            Tuple.Create(2,0),
-            Tuple.Create(3,0)
-        };
+        private List<(int, int)> listOfColors = new();
 
-        public void colorAdded()
+        private DrinkStorage Storage;
+
+        
+        private void Start()
         {
-            GameObject drinkStorage = GameObject.FindWithTag("storage");
+            Storage = GameObject.FindWithTag("storage").GetComponent<DrinkStorage>();
+
+        }
+
+        public void AddColor(int addedIndex)
+        {
+            
         }
     }
 }
