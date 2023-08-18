@@ -9,6 +9,8 @@ namespace Script
         private List<(int, int)> listOfColors = new();
 
         private DrinkStorage Storage;
+        [SerializeField]
+        private DrinkColorScript _colorScript;
 
         
         private void Start()
