@@ -1,0 +1,16 @@
+Rookie
+Seer
+Evoker
+Seer
+Conjurer
+Theurgist
+Magician
+Enchanter
+Warlock
+Sorcerer
+Necromancer
+Wizard
+Master Wizard I
+Master Wizard II
+Master Wizard III
+Grand Wizard
