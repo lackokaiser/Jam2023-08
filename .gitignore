@@ -27,7 +27,7 @@
 .vs/
 
 # Rider
-.idea/
+.idea/*
 
 # Gradle cache directory
 .gradle/
