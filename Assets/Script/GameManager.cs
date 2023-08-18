@@ -12,9 +12,13 @@ namespace Script
     {
         [Min(0)]
         public int streak;
+        private string playerTitle;
+
+        private List<string> EnglishTitles = new List<string>();
+        private List<string> GermanTitles = new List<string>();
         private List<string> EnglishPotions = new List<string>();
         private List<string> GermanPotions = new List<string>();
-        private string playerTitle;
+
         public int pourAttempts;
         public Color colorToGo;
         public string potionName;
@@ -36,8 +40,11 @@ namespace Script
         {
             _storage = new DrinkStorage();
             mainDrink = GameObject.FindWithTag("Drink").GetComponent<DrinkScript>();
-            ReadPotionNames(EnglishPotions, @"Assets\Script\textfiles\potion_names.txt");
-            ReadPotionNames(GermanPotions, @"Assets\Script\textfiles\potion_names_german.txt");
+
+            ReadPotionsAndNames(EnglishPotions, @"Assets\Script\textfiles\potion_names.txt");
+            ReadPotionsAndNames(GermanPotions, @"Assets\Script\textfiles\potion_names_german.txt");
+            ReadPotionsAndNames(EnglishTitles, @"Assets\Script\textfiles\player_levels.txt");
+            ReadPotionsAndNames(GermanTitles, @"Assets\Script\textfiles\player_levels_german.txt");
         }
 
         // Update is called once per frame
@@ -67,6 +74,14 @@ namespace Script
             if (streak % 5 == 0)
             {
                 _storage.AddNewRandomDrink();
+                if (isDead)
+                {
+                    playerTitle = GermanTitles[(streak % 5)];
+                }
+                else
+                {
+                    playerTitle = EnglishTitles[(streak % 5)];
+                }
             }
             
             mainDrink.SetColorFade(starter);
@@ -77,7 +92,6 @@ namespace Script
             }
 
             colorToGo = starter;
-            string potionName;
             // TODO: potion name select
             int rndName = UnityEngine.Random.Range(1, 200);
             if (isDead)
@@ -90,6 +104,7 @@ namespace Script
             }
             // TODO: Title giving
             
+            
         }
 
         public bool IsColorMatch(Color other)
@@ -97,7 +112,7 @@ namespace Script
             return colorToGo == other;
         }
 
-        private void ReadPotionNames(List<string> list, string fileName)
+        private void ReadPotionsAndNames(List<string> list, string fileName)
         {
             StreamReader sr = new StreamReader(fileName);
             while (!sr.EndOfStream)
