@@ -75,13 +75,9 @@ namespace Script
             {
                 _storage.AddNewRandomDrink();
                 if (isDead)
-                {
-                    playerTitle = GermanTitles[(streak % 5)];
-                }
+                   playerTitle = GermanTitles[(streak % 5)];
                 else
-                {
-                    playerTitle = EnglishTitles[(streak % 5)];
-                }
+                   playerTitle = EnglishTitles[(streak % 5)];
             }
             
             mainDrink.SetColorFade(starter);
@@ -92,18 +88,12 @@ namespace Script
             }
 
             colorToGo = starter;
-            // TODO: potion name select
+            
             int rndName = UnityEngine.Random.Range(1, 200);
             if (isDead)
-            {
-                potionName = GermanPotions[rndName];
-            }
+               potionName = GermanPotions[rndName];
             else
-            {
-                potionName = EnglishPotions[rndName];
-            }
-            // TODO: Title giving
-            
+               potionName = EnglishPotions[rndName];
             
         }
 
