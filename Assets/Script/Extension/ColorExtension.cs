@@ -10,9 +10,10 @@ namespace Script.Extension
             return new Color(maxColor-color.r, maxColor-color.g, maxColor-color.b);
         }
 
-        public static void AddColor(this Color color, Color other)
+        public static Color CombineColor(this Color color, Color other)
         {
-            
+            Color c = new Color(color.r + other.r, other.g + other.g, other.b + other.b);
+            return c;
         }
     }
 }

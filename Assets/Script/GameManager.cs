@@ -42,10 +42,12 @@ namespace Script
         public GameObject Potion;
 
         public Material GrayscaleMaterial;
+        public Material InvertedMaterial;
         
         private static readonly int Dead1 = Animator.StringToHash("dead");
         private static readonly int Lived = Animator.StringToHash("lived");
         private static readonly int GrayscaleAmount = Shader.PropertyToID("_GrayscaleAmount");
+        private static readonly int Threshold = Shader.PropertyToID("_Threshold");
 
 
         // Start is called before the first frame update
@@ -113,6 +115,27 @@ namespace Script
                 streak = 0;
             StartCoroutine(SetGrayscale(10f, isDead));
         }
+        
+        private IEnumerator SetInvertedRoutine(float duration, bool isGrayscale = true)
+        {
+            float time = 0;
+            while (duration > time)
+            {
+                float durationTime = Time.deltaTime;
+                float ratio = time / duration;
+                
+                SetInvertedAmount(isGrayscale ? ratio : 1 - ratio);
+                time += durationTime;
+                yield return null;
+            }
+
+            SetInvertedAmount(isGrayscale ? 1 : 0);
+        }
+
+        private void SetInvertedAmount(float amount)
+        {
+            InvertedMaterial.SetFloat(Threshold, amount);
+        }
 
         private IEnumerator SetGrayscale(float duration, bool isGrayscale = true)
         {
@@ -122,12 +145,12 @@ namespace Script
                 float durationTime = Time.deltaTime;
                 float ratio = time / duration;
                 
-                SetGrayscale(isGrayscale ? ratio : 1 - ratio);
+                SetGrayscaleAmount(isGrayscale ? ratio : 1 - ratio);
                 time += durationTime;
                 yield return null;
             }
 
-            SetGrayscale(isGrayscale ? 1 : 0);
+            SetGrayscaleAmount(isGrayscale ? 1 : 0);
         }
 
         private void SetGrayscaleAmount(float amount)
@@ -160,8 +183,8 @@ namespace Script
             pourAttempts = r.Next(3, 8);
             for (int i = 0; i < pourAttempts; i++)
             {
-                starter.AddColor(_storage.GetDrinkColor(r.Next(_storage.GetDrinkAmount()), isDead));
-            }
+                starter = starter.CombineColor(_storage.GetDrinkColor(r.Next(_storage.GetDrinkAmount()), isDead));
+            } 
 
             colorToGo = starter;
             potion.InitFade(colorToGo);

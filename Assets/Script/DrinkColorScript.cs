@@ -1,4 +1,5 @@
 ﻿using System;
+using Script.Extension;
 using UnityEngine;
 
 namespace Script
@@ -33,12 +34,12 @@ namespace Script
 
         public void AddColor(Color c)
         {
-            SetColor(_spriteRenderer.color + c);
+            SetColor(_spriteRenderer.color.CombineColor(c));
         }
 
         public void AddColorFade(Color c)
         {
-            InitFade(_spriteRenderer.color + c);
+            InitFade(_spriteRenderer.color.CombineColor(c));
         }
 
         public void SetColor(Color c)

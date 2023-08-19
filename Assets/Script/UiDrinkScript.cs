@@ -1,3 +1,4 @@
+using Script.Extension;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,12 +34,12 @@ namespace Script
 
         public void AddColor(Color c)
         {
-            SetColor(_image.color + c);
+            SetColor(_image.color.CombineColor(c));
         }
 
         public void AddColorFade(Color c)
         {
-            InitFade(_image.color + c);
+            InitFade(_image.color.CombineColor(c));
         }
 
         public void SetColor(Color c)
