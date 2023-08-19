@@ -1,4 +1,5 @@
 
+using JetBrains.Annotations;
 using Script.Extension;
 using System;
 using System.Collections;
@@ -30,10 +31,11 @@ namespace Script
 
         private DrinkStorage _storage;
         private DrinkScript mainDrink;
-
         
+
         public GameObject bottle;
 
+        public TextMeshProUGUI hitTheColor;
         public TextMeshProUGUI score;
         public TextMeshProUGUI title;
         public UiDrinkScript potion;
@@ -55,20 +57,20 @@ namespace Script
         // Start is called before the first frame update
         void Start()
         {
+
             _storage = new DrinkStorage();
+            hitTheColor.SetText(" ");
             mainDrink = GameObject.FindWithTag("Drink").GetComponent<DrinkScript>();
             ReadPotionsAndNames(EnglishPotions, @"Assets\Script\textfiles\potion_names.txt");
             ReadPotionsAndNames(GermanPotions, @"Assets\Script\textfiles\potion_names_german.txt");
             ReadPotionsAndNames(EnglishTitles, @"Assets\Script\textfiles\player_levels.txt");
             ReadPotionsAndNames(GermanTitles, @"Assets\Script\textfiles\player_levels_german.txt");
-            Debug.Log(EnglishTitles[0]);
 
             for (int i = 0; i < _storage.GetDrinkAmount(); i++)
             {
                 GameObject tmp = Instantiate(Potion, new Vector3(i * 2.0f, -3.5f), Quaternion.identity);
                 
                 tmp.GetComponent<DrinkScript>().SetColorFade(_storage.GetDrinkColor(i));
-                Debug.Log(i);
             }
 
             GenerateNextLevel();
@@ -98,7 +100,17 @@ namespace Script
                     if(!isDead)
                         streak++;
                     // TODO execute animation for scoring
-                    if(isDead)
+                    hitTheColor.SetText("YOU HIT THE COLOR");
+                    float duration = 10f;
+                    float time = 0;
+                    while (duration > time)
+                    {
+                        float durationTime = Time.deltaTime;
+                        time += durationTime;
+                    }
+                    hitTheColor.SetText(" ");
+
+                    if (isDead)
                         ToggleDead();
                 }
                 else if(!isDead)
@@ -113,10 +125,12 @@ namespace Script
                 if(!isDead)
                     streak++;
                 // TODO execute animation for scoring
-                if(isDead)
+                if (isDead)
                     ToggleDead();
                 GenerateNextLevel();
             }
+            
+
         }
 
         public void ToggleDead()
@@ -176,7 +190,7 @@ namespace Script
         public void GenerateNextLevel()
         {
             System.Random r = new System.Random();
-
+            
             Color starter = new Color((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble());
             if (isDead)
                 starter = starter.InvertColor();
