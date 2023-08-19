@@ -41,6 +41,7 @@ namespace Script
         public UiDrinkScript potion;
         public TextMeshProUGUI potionNm;
         public Animator playerAnimator;
+        public Animator isHit;
 
         public Renderer ColorRenderer;
         public GameObject Potion;
@@ -52,6 +53,7 @@ namespace Script
         private static readonly int Lived = Animator.StringToHash("lived");
         private static readonly int GrayscaleAmount = Shader.PropertyToID("_GrayscaleAmount");
         private static readonly int Threshold = Shader.PropertyToID("_Threshold");
+        private static readonly int Hit = Animator.StringToHash("isHit");
 
 
         // Start is called before the first frame update
@@ -59,7 +61,6 @@ namespace Script
         {
 
             _storage = new DrinkStorage();
-            hitTheColor.SetText(" ");
             mainDrink = GameObject.FindWithTag("Drink").GetComponent<DrinkScript>();
             ReadPotionsAndNames(EnglishPotions, @"Assets\Script\textfiles\potion_names.txt");
             ReadPotionsAndNames(GermanPotions, @"Assets\Script\textfiles\potion_names_german.txt");
@@ -101,15 +102,7 @@ namespace Script
                     if(!isDead)
                         streak++;
                     // TODO execute animation for scoring
-                    hitTheColor.SetText("YOU HIT THE COLOR");
-                    float duration = 10f;
-                    float time = 0;
-                    while (duration > time)
-                    {
-                        float durationTime = Time.deltaTime;
-                        time += durationTime;
-                    }
-                    hitTheColor.SetText(" ");
+                    isHit.SetTrigger(Hit);
 
                     if (isDead)
                         ToggleDead();
@@ -127,6 +120,7 @@ namespace Script
                 if(!isDead)
                     streak++;
                 // TODO execute animation for scoring
+                isHit.SetTrigger(Hit);
                 if (isDead)
                     ToggleDead();
                 GenerateNextLevel();
@@ -159,6 +153,7 @@ namespace Script
 
             SetInvertedAmount(isGrayscale ? 1 : 0);
         }
+
 
         private void SetInvertedAmount(float amount)
         {
