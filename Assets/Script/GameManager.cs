@@ -22,6 +22,7 @@ namespace Script
         private List<string> GermanTitles = new List<string>();
         private List<string> EnglishPotions = new List<string>();
         private List<string> GermanPotions = new List<string>();
+        private List<string> EffectNames = new();
 
         public int pourAttempts;
         public Color colorToGo;
@@ -66,7 +67,7 @@ namespace Script
             ReadPotionsAndNames(GermanPotions, @"Assets\Script\textfiles\potion_names_german.txt");
             ReadPotionsAndNames(EnglishTitles, @"Assets\Script\textfiles\player_levels.txt");
             ReadPotionsAndNames(GermanTitles, @"Assets\Script\textfiles\player_levels_german.txt");
-
+            ReadPotionsAndNames(EffectNames, @"Assets\Script\textfiles\effectPrompts.txt");
             for (int i = 0; i < _storage.GetDrinkAmount(); i++)
             {
                 GameObject tmp = Instantiate(Potion, new Vector3(i * 2.0f, -3.5f), Quaternion.identity);
@@ -102,6 +103,8 @@ namespace Script
                     if(!isDead)
                         streak++;
                     // TODO execute animation for scoring
+                    hitTheColor.SetText(EffectNames[UnityEngine.Random.Range(0, EffectNames.Count-1)]);
+                    hitTheColor.SetAllDirty();
                     isHit.SetTrigger(Hit);
 
                     if (isDead)
@@ -120,6 +123,8 @@ namespace Script
                 if(!isDead)
                     streak++;
                 // TODO execute animation for scoring
+                hitTheColor.SetText(EffectNames[UnityEngine.Random.Range(0, EffectNames.Count-1)]);
+                hitTheColor.SetAllDirty();
                 isHit.SetTrigger(Hit);
                 if (isDead)
                     ToggleDead();
