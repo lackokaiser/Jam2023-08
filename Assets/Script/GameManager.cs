@@ -61,10 +61,11 @@ namespace Script
             ReadPotionsAndNames(GermanPotions, @"Assets\Script\textfiles\potion_names_german.txt");
             ReadPotionsAndNames(EnglishTitles, @"Assets\Script\textfiles\player_levels.txt");
             ReadPotionsAndNames(GermanTitles, @"Assets\Script\textfiles\player_levels_german.txt");
+            Debug.Log(EnglishTitles[0]);
 
-            for(int i = 0; i < _storage.GetDrinkAmount(); i++)
+            for (int i = 0; i < _storage.GetDrinkAmount(); i++)
             {
-                GameObject tmp = Instantiate(Potion, new Vector3(i * 2.0f, 1.0f), Quaternion.identity);
+                GameObject tmp = Instantiate(Potion, new Vector3(i * 2.0f, -3.5f), Quaternion.identity);
                 
                 tmp.GetComponent<DrinkScript>().SetColorFade(_storage.GetDrinkColor(i));
                 Debug.Log(i);
@@ -123,7 +124,7 @@ namespace Script
             isDead = !isDead;
             playerAnimator.SetTrigger(isDead ? Dead1 : Lived);
             if (isDead)
-                streak = 0;
+                streak--;
             StartCoroutine(SetGrayscale(10f, isDead));
         }
         
@@ -184,11 +185,17 @@ namespace Script
             if (streak % 5 == 0)
             {
                 _storage.AddNewRandomDrink();
-                if (isDead)
-                   playerTitle = GermanTitles[(streak % 5)];
-                else
-                   playerTitle = EnglishTitles[(streak % 5)];
+
             }
+
+            if(streak % 2 == 0)
+            {
+                if (isDead)
+                    playerTitle = GermanTitles[(streak % 5)];
+                else
+                    playerTitle = EnglishTitles[(streak % 5)];
+            }
+
             
             mainDrink.SetColorFade(starter);
             pourAttempts = r.Next(3, 8);
