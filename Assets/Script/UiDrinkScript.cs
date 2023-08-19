@@ -1,11 +1,11 @@
-﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Script
 {
-    public class DrinkColorScript : MonoBehaviour
+    public class UiDrinkScript : MonoBehaviour
     {
-        private SpriteRenderer _spriteRenderer;
+        private Image _image;
         public float fadeTime = 10;
         private bool isChanging;
         private float fadeStart;
@@ -13,7 +13,7 @@ namespace Script
 
         private void Start()
         {
-            _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            _image = gameObject.GetComponent<Image>();
         }
 
         private void Update()
@@ -22,7 +22,7 @@ namespace Script
             {
                 fadeStart += Time.deltaTime * fadeTime;
  
-                _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, changeTo, fadeStart);
+                _image.color = Color.Lerp(_image.color, changeTo, fadeStart);
             }
         }
 
@@ -33,17 +33,17 @@ namespace Script
 
         public void AddColor(Color c)
         {
-            SetColor(_spriteRenderer.color + c);
+            SetColor(_image.color + c);
         }
 
         public void AddColorFade(Color c)
         {
-            InitFade(_spriteRenderer.color + c);
+            InitFade(_image.color + c);
         }
 
         public void SetColor(Color c)
         {
-            _spriteRenderer.color = c;
+            _image.color = c;
             changeTo = c;
         }
 
