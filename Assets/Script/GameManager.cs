@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -13,7 +14,12 @@ namespace Script
     public class GameManager : MonoBehaviour
     {
         [Range(0, 1)] public float ColorMatchThreshold = 0.3f;
-        
+
+        public TextAsset EffectNamesFile;
+        public TextAsset EnglishTitlesFile;
+        public TextAsset GermanTitlesFile;
+        public TextAsset EnglishPotionsFile;
+        public TextAsset GermanPotionsFile;
         [Min(0)]
         public int streak;
         private string playerTitle;
@@ -63,11 +69,11 @@ namespace Script
             SetGrayscaleAmount(0);
             _storage = new DrinkStorage();
             mainDrink = GameObject.FindWithTag("Drink").GetComponent<DrinkScript>();
-            ReadPotionsAndNames(EnglishPotions, @"Assets\Script\textfiles\potion_names.txt");
-            ReadPotionsAndNames(GermanPotions, @"Assets\Script\textfiles\potion_names_german.txt");
-            ReadPotionsAndNames(EnglishTitles, @"Assets\Script\textfiles\player_levels.txt");
-            ReadPotionsAndNames(GermanTitles, @"Assets\Script\textfiles\player_levels_german.txt");
-            ReadPotionsAndNames(EffectNames, @"Assets\Script\textfiles\effectPrompts.txt");
+            ReadPotionsAndNames(EnglishPotions, EnglishPotionsFile);
+            ReadPotionsAndNames(GermanPotions, GermanPotionsFile);
+            ReadPotionsAndNames(EnglishTitles, EnglishTitlesFile);
+            ReadPotionsAndNames(GermanTitles, GermanTitlesFile);
+            ReadPotionsAndNames(EffectNames, EffectNamesFile);
             for (int i = 0; i < _storage.GetDrinkAmount(); i++)
             {
                 GameObject tmp = Instantiate(Potion, new Vector3(i * 2.0f, -3.5f), Quaternion.identity);
@@ -236,14 +242,9 @@ namespace Script
             return colorToGo.SimilarColor(other, ColorMatchThreshold);
         }
 
-        private void ReadPotionsAndNames(List<string> list, string fileName)
+        private void ReadPotionsAndNames(List<string> list, TextAsset file)
         {
-            StreamReader sr = new StreamReader(fileName);
-            while (!sr.EndOfStream)
-            {
-                string line = sr.ReadLine();
-                list.Add(line);
-            }
+            list.AddRange(file.text.Split('\n').ToList());
         }
     }
 }
