@@ -1,6 +1,7 @@
 
 using Script.Extension;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -33,9 +34,19 @@ namespace Script
 
         public TextMeshProUGUI score;
         public TextMeshProUGUI title;
+        public UiDrinkScript potion;
+        public TextMeshProUGUI potionNm;
+        public Animator playerAnimator;
 
         public Renderer ColorRenderer;
         public GameObject Potion;
+
+        public Material GrayscaleMaterial;
+        
+        private static readonly int Dead1 = Animator.StringToHash("dead");
+        private static readonly int Lived = Animator.StringToHash("lived");
+        private static readonly int GrayscaleAmount = Shader.PropertyToID("_GrayscaleAmount");
+
 
         // Start is called before the first frame update
         void Start()
@@ -50,10 +61,12 @@ namespace Script
             for(int i = 0; i < _storage.GetDrinkAmount(); i++)
             {
                 GameObject tmp = Instantiate(Potion, new Vector3(i * 2.0f, 1.0f), Quaternion.identity);
-                tmp.GetComponent<DrinkScript>().SetColor(_storage.GetDrinkColor(i));
+                
+                tmp.GetComponent<DrinkScript>().SetColorFade(_storage.GetDrinkColor(i));
                 Debug.Log(i);
             }
 
+            GenerateNextLevel();
         }
 
         // Update is called once per frame
@@ -61,11 +74,65 @@ namespace Script
         {
             score.SetText(streak.ToString());
             title.SetText(playerTitle);
+            potionNm.SetText(potionName);
         }
 
         public DrinkStorage GetDrinkStorage()
         {
             return _storage;
+        }
+
+        public void AddColorToDrink(Color c)
+        {
+            mainDrink.AddColor(c);
+            pourAttempts--;
+            if (pourAttempts == 0)
+            {
+                if (IsColorMatch(mainDrink.getCurrentColor()))
+                {
+                    if(!isDead)
+                        streak++;
+                    // TODO execute animation for scoring
+                    if(isDead)
+                        ToggleDead();
+                }
+                else if(!isDead)
+                {
+                    ToggleDead();
+                }
+                
+                GenerateNextLevel();
+            }
+        }
+
+        public void ToggleDead()
+        {
+            isDead = !isDead;
+            playerAnimator.SetTrigger(isDead ? Dead1 : Lived);
+            if (isDead)
+                streak = 0;
+            StartCoroutine(SetGrayscale(10f, isDead));
+        }
+
+        private IEnumerator SetGrayscale(float duration, bool isGrayscale = true)
+        {
+            float time = 0;
+            while (duration > time)
+            {
+                float durationTime = Time.deltaTime;
+                float ratio = time / duration;
+                
+                SetGrayscale(isGrayscale ? ratio : 1 - ratio);
+                time += durationTime;
+                yield return null;
+            }
+
+            SetGrayscale(isGrayscale ? 1 : 0);
+        }
+
+        private void SetGrayscaleAmount(float amount)
+        {
+            GrayscaleMaterial.SetFloat(GrayscaleAmount, amount);
         }
 
         /**
@@ -93,10 +160,11 @@ namespace Script
             pourAttempts = r.Next(3, 8);
             for (int i = 0; i < pourAttempts; i++)
             {
-                starter += _storage.GetDrinkColor(r.Next(_storage.GetDrinkAmount()), isDead);
+                starter.AddColor(_storage.GetDrinkColor(r.Next(_storage.GetDrinkAmount()), isDead));
             }
 
             colorToGo = starter;
+            potion.InitFade(colorToGo);
             
             int rndName = UnityEngine.Random.Range(1, 200);
             if (isDead)
