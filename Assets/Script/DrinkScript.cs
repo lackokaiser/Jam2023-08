@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 namespace Script
 {
@@ -12,6 +13,13 @@ namespace Script
         [SerializeField]
         private ParticleSystem _particleSystem;
 
+        private AudioSource audio;
+
+        private void Start()
+        {
+            audio = gameObject.GetComponent<AudioSource>();
+        }
+
         public Color getCurrentColor()
         {
             return _colorScript.getCurrentColor();
@@ -21,6 +29,8 @@ namespace Script
         {
             if(_particleSystem != null)
                 _particleSystem.Play();
+            audio.Stop();
+            audio.Play();
         }
         
         public void AddColor(Color c)
