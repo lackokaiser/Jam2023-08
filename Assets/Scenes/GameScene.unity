@@ -365,6 +365,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FinalDrink
       objectReference: {fileID: 0}
+    - target: {fileID: 8427255606118082417, guid: b2ebca9a8fa01ab4cb2c49499c9fb786, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c68e44b1f96827d429c799adfb1fd8de, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
