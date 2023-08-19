@@ -9,9 +9,18 @@ namespace Script
         [SerializeField]
         private DrinkColorScript _colorScript;
 
+        [SerializeField]
+        private ParticleSystem _particleSystem;
+
         public Color getCurrentColor()
         {
             return _colorScript.getCurrentColor();
+        }
+
+        public void PlayParticle()
+        {
+            if(_particleSystem != null)
+                _particleSystem.Play();
         }
         
         public void AddColor(Color c)

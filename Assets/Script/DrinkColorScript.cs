@@ -23,7 +23,7 @@ namespace Script
             {
                 fadeStart += Time.deltaTime * fadeTime;
  
-                _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, changeTo, fadeStart);
+                _spriteRenderer.color = Color.Lerp(_spriteRenderer.color, changeTo, fadeTime / fadeStart);
             }
         }
 
