@@ -11,6 +11,8 @@ namespace Script
 {
     public class GameManager : MonoBehaviour
     {
+        [Range(0, 1)] public float ColorMatchThreshold = 0.3f;
+        
         [Min(0)]
         public int streak;
         private string playerTitle;
@@ -103,6 +105,15 @@ namespace Script
                     ToggleDead();
                 }
                 
+                GenerateNextLevel();
+            }
+            else if (IsColorMatch(mainDrink.getCurrentColor()))
+            {
+                if(!isDead)
+                    streak++;
+                // TODO execute animation for scoring
+                if(isDead)
+                    ToggleDead();
                 GenerateNextLevel();
             }
         }
@@ -199,7 +210,7 @@ namespace Script
 
         public bool IsColorMatch(Color other)
         {
-            return colorToGo == other;
+            return colorToGo.SimilarColor(other, ColorMatchThreshold);
         }
 
         private void ReadPotionsAndNames(List<string> list, string fileName)
