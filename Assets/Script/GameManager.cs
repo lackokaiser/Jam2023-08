@@ -97,6 +97,7 @@ namespace Script
             {
                 if (IsColorMatch(mainDrink.getCurrentColor()))
                 {
+                    mainDrink.PlayParticle();
                     if(!isDead)
                         streak++;
                     // TODO execute animation for scoring
@@ -122,6 +123,7 @@ namespace Script
             }
             else if (IsColorMatch(mainDrink.getCurrentColor()))
             {
+                mainDrink.PlayParticle();
                 if(!isDead)
                     streak++;
                 // TODO execute animation for scoring
