@@ -59,7 +59,7 @@ namespace Script
         // Start is called before the first frame update
         void Start()
         {
-
+            SetGrayscaleAmount(0);
             _storage = new DrinkStorage();
             mainDrink = GameObject.FindWithTag("Drink").GetComponent<DrinkScript>();
             ReadPotionsAndNames(EnglishPotions, @"Assets\Script\textfiles\potion_names.txt");
@@ -135,7 +135,7 @@ namespace Script
             playerAnimator.SetTrigger(isDead ? Dead1 : Lived);
             if (isDead)
                 streak--;
-            StartCoroutine(SetGrayscale(10f, isDead));
+            StartCoroutine(SetGrayscale(2f, isDead));
         }
         
         private IEnumerator SetInvertedRoutine(float duration, bool isGrayscale = true)
